@@ -1,9 +1,66 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Quiz.Gui.PopupPage"
-             Title="PopupPage">
-    <VerticalStackLayout>
-       
-    </VerticalStackLayout>
-</ContentPage>
+<sfPopup:SfPopup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="Quiz.Gui.PopupPage"
+                 ShowFooter="False"
+                 ShowCloseButton="True" 
+                 HeightRequest="300"
+                 WidthRequest="320"
+                 xmlns:models="clr-namespace:Quiz.Core;assembly=Quiz.Core"
+                 xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+                 x:Name="sfPopup">
+
+    <sfPopup:SfPopup.PopupStyle>
+        <sfPopup:PopupStyle 
+            HeaderBackground="{AppThemeBinding Light={StaticResource Tertiary},Dark={StaticResource TertiaryDark}}"
+            FooterBackground="{AppThemeBinding Light={StaticResource Tertiary},Dark={StaticResource TertiaryDark}}"
+            AcceptButtonBackground ="DimGray"
+            HeaderFontFamily="Roboto-Medium"
+                            AcceptButtonTextColor="White"
+                            DeclineButtonBackground="DimGray"
+                            DeclineButtonTextColor="White"
+            PopupBackground="{AppThemeBinding Light={StaticResource Tertiary},Dark={StaticResource TertiaryDark}}"
+            Stroke="LightBlue"
+            MessageFontFamily="Roboto-Medium"
+            StrokeThickness="1"
+            CornerRadius="8" />
+    </sfPopup:SfPopup.PopupStyle>
+
+    <sfPopup:SfPopup.HeaderTemplate>
+        <DataTemplate>
+            <StackLayout Margin="10">
+                <Label FontSize="Medium" Text="Spielende verwalten"/>
+            </StackLayout>
+        </DataTemplate>
+    </sfPopup:SfPopup.HeaderTemplate>
+    <sfPopup:SfPopup.ContentTemplate>
+        <DataTemplate>
+            <Grid x:Name="PlayerList" Margin="10" 
+                  ColumnDefinitions="*,Auto"
+                  RowDefinitions="Auto,*" 
+                  ColumnSpacing="5" RowSpacing="2">
+
+                <Entry Grid.Row="0" Grid.Column="0" Text="{Binding 
+                    Source={x:Reference PlayerList},
+                    Path=BindingContext.NewPlayerName}"
+                    ReturnCommand="{Binding 
+                    Source={x:Reference PlayerList},
+                    Path=BindingContext.AddPlayerCommand}" />
+                <Button Text="+" Grid.Row="0" Grid.Column="1" Command="{Binding 
+                    Source={x:Reference PlayerList},
+                    Path=BindingContext.AddPlayerCommand}" />
+
+                <CollectionView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Players}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Player">
+                            <StackLayout>
+                                <Label Padding="5" FontAttributes="Bold" Text="{Binding Name}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+            </Grid>
+        </DataTemplate>
+    </sfPopup:SfPopup.ContentTemplate>
+</sfPopup:SfPopup>

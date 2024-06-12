@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quiz.Gui.ViewModels;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace Quiz.Gui
 {
@@ -10,6 +11,7 @@ namespace Quiz.Gui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,6 +24,7 @@ namespace Quiz.Gui
 
 #if DEBUG
     		builder.Logging.AddDebug();
+            builder.ConfigureSyncfusionCore();
 #endif
 
             return builder.Build();

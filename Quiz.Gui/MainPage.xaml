@@ -1,10 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Quiz.Gui.ViewModels"
+             xmlns:syncfusionPopUp="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+             x:DataType="viewmodels:MainViewModel"
+             xmlns:models="clr-namespace:Quiz.Core;assembly=Quiz.Core"
+             xmlns:local="clr-namespace:Quiz.Gui"
              x:Class="Quiz.Gui.MainPage">
 
-    <Grid>
-        
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="users.png" Text="Benutzer verwalten" Command="{Binding ManageUsersCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*,0">
+
+        <local:PopupPage Grid.Row="2" x:Name="popup" 
+            IsOpen="{Binding ShowUsersPopup}">
+        </local:PopupPage>
     </Grid>
 
 </ContentPage>
