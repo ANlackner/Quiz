@@ -77,4 +77,10 @@ public partial class MainViewModel : ObservableObject
             // this.AddRoundCommand.NotifyCanExecuteChanged();
         }
     }
+
+    private Game _game = new Game();
+
+    private GameRound? _activeRound = null;
+
+    private Play? _activePlay = null;
 }

@@ -5,6 +5,7 @@
              xmlns:syncfusionPopUp="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
              x:DataType="viewmodels:MainViewModel"
              xmlns:models="clr-namespace:Quiz.Core;assembly=Quiz.Core"
+             xmlns:guimodels="clr-namespace:Quiz.Gui.Models"
              xmlns:local="clr-namespace:Quiz.Gui"
              x:Class="Quiz.Gui.MainPage">
 
