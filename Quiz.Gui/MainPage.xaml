@@ -9,14 +9,17 @@
              xmlns:local="clr-namespace:Quiz.Gui"
              x:Class="Quiz.Gui.MainPage">
 
+    
+    
     <ContentPage.Resources>
         <ResourceDictionary>
-
+            
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="users.png" Text="Benutzer verwalten" Command="{Binding ManageUsersCommand}" />
+        <ToolbarItem IconImageSource="round.png" Text="Spielrunde hinzufügen" Command="{Binding AddRoundCommand}" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*,0">

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using Quiz.Core;
+using Quiz.Gui.Models;
 using System.Collections.Specialized;
 
 namespace Quiz.Gui.ViewModels;
@@ -26,6 +27,71 @@ public partial class MainViewModel : ObservableObject
     {
         this.ShowUsersPopup = true;
     }
+
+    [ObservableProperty]
+    ObservableCollection<QuestionProviderItem> _rounds = [];
+
+    Random gen = new Random();
+    private bool UsersAvailable => this.Players.Count > 0;
+    public bool IsRoundInit => this._game.Count > 0 && this._game.GetLatestRound().Status == GameRoundStatus.Init;
+
+    public bool IsRoundActive => this._game.Count > 0 && this._game.GetLatestRound().Status == GameRoundStatus.Active;
+
+    public bool IsRoundDone => this._game.Count > 0 && this._game.GetLatestRound().Status == GameRoundStatus.Done;
+
+    public string? RoundTopic
+    {
+        get
+        {
+            if (this._game.Count > 0)
+            {
+                return this._game.GetLatestRound().Topic;
+            }
+
+            return null;
+        }
+    }
+
+
+    [RelayCommand(CanExecute = nameof(UsersAvailable))]
+    void AddRound()
+    {
+        IQuestionProvider staticProvider;
+
+        // get random providers
+        // gen.Next returns 0 or 1
+        if (gen.Next(0, 2) == 0)
+        {
+            staticProvider = new StaticQuestions();
+        }
+        else
+        {
+            staticProvider = new NatureQuestionProvider();
+        }
+
+        // create an item and generate image
+        QuestionProviderItem item = new QuestionProviderItem(staticProvider);
+
+        // add item to game rounds (for the display)
+        this.Rounds.Add(item);
+
+        // add round to game object
+        _game.AddRound(staticProvider, true, 5);
+
+        // add each player to the game object
+        foreach (Player p in Players)
+        {
+            _game.AddPlayerToLatestRound(p);
+        }
+
+        OnPropertyChanged(nameof(RoundTopic));
+
+        OnPropertyChanged(nameof(IsRoundInit));
+        OnPropertyChanged(nameof(IsRoundActive));
+        OnPropertyChanged(nameof(IsRoundDone));
+    }
+
+
 
 
 
